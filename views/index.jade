@@ -1,0 +1,31 @@
+extends layout
+
+append content
+  h1= title
+  p Welcome to #{title}
+
+  a(href='#', id='room') Rooms
+
+  .row
+    .col-md-2
+      .rooms
+
+   script.
+     $('#room').onclick = function(e) {
+       e.preventDefault();
+       $.get("/rooms", "json").then(function(data) {
+         var html = "", template;
+         template =  "<div style='font-size: 20px'>" +
+           "<strong><a href='#/{{id}}'>{{room}}</a></strong>" +
+           "</div>";
+
+         var rooms = data.rooms;
+         for(var r in rooms) {
+           html += Mustache(template, rooms[r])
+         }
+         console.log(html)
+        $(".rooms").innerHTML = html;
+       }).catch(function(err) {
+          console.log("Error!!")
+       });
+     }

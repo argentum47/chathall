@@ -1,0 +1,18 @@
+extends layout
+
+append content
+  .row
+    .col-md-2
+      .rooms
+
+   script.
+     $.get('/rooms').then(function(data) {
+       var template =
+         "<strong style='font-size: 20px'>" +
+           "<a href='/'>{{name}}</a></strong>";
+       var html = Mustache(template, data);
+       console.log(data);
+       $(".rooms").appendChild(html);
+     }).catch(function(xhr) {
+       console.log("Failed with ", xhr.status);
+     });
