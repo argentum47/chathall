@@ -1,22 +1,40 @@
 var express = require('express'),
     router  = express.Router();
+var io = require('socket.io')();
 
 var rooms =
-  [{
-    room: "js",
-    id: "17"
-  },
-   {
-     room: "php",
-     id: "11"
-   },
-   {
-     room: "rails",
-     id: "33"
-   }];
+    [{id:13,
+      room :"java" },
+     {id: 11,
+      room: "php" },
+     {id: 14,
+      room: "react" },
+     {id: 17,
+      room:"js" },
+     {id: 12,
+      room: "go"},
+     {id: 16,
+      room: "php"},
+     {id: 18,
+      room: "ruby"},
+     {id: 15,
+      room: "emacs"}];
+
+function getRoomName(id) {
+  for(var r in rooms) {
+    if(rooms[r].id == +id)
+      return rooms[r].room
+  }
+}
+
+router.get('/:id/:name', function(req, res,next) {
+  console.log(req.params, req.params.id, getRoomName(req.params.id))
+  res.render(getRoomName(req.params.id))
+});
 
 router.get('/', function(req, res, next) {
   res.send({ rooms: rooms });
 });
+
 
 module.exports = router

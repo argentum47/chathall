@@ -16,7 +16,7 @@ append content
        $.get("/rooms", "json").then(function(data) {
          var html = "", template;
          template =  "<div style='font-size: 20px'>" +
-           "<strong><a href='#/{{id}}'>{{room}}</a></strong>" +
+           "<strong><a href='rooms/{{id}}/{{room}}'>{{room}}</a></strong>" +
            "</div>";
 
          var rooms = data.rooms;

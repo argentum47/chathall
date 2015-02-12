@@ -2,9 +2,70 @@ var express = require('express');
 var router = express.Router();
 
 /* GET users listing. */
-var users = ['john', 'ryan', 'benji']
+var users =
+    [{id: 1,
+      room_id: '',
+      name: "dhall0"},
+     {id: 2,
+      room_id: '',
+      name: "dwallace1"},
+     {id: 3,
+      room_id: '',
+      name: "jcunningham2"},
+     {id: 4,
+      room_id: '',
+      name: "lwoods3"},
+     {id: 5,
+      room_id: '',
+      name: "driley4"},
+     {id: 6,
+      room_id: '',
+      name: "aromero5"},
+     {id: 7,
+      room_id: '',
+      name: "rromero6"},
+     {id: 8,
+      room_id: '',
+      name: "creed7"},
+     {id: 9,
+      room_id: '',
+      name: "cwells8"},
+     {id: 10,
+      room_id: '',
+      name: "tevans9"},
+     {id: 11,
+      room_id: '',
+      name: "ahowarda"},
+     {id: 12,
+      room_id: '',
+      name: "jhunterb"},
+     {id: 13,
+      room_id: '',
+      name: "mmyersc"},
+     {id: 14,
+      room_id: '',
+      name: "lcarrolld"},
+     {id: 15,
+      room_id: '',
+      name: "kandersone"},
+     {id: 16,
+      room_id: '',
+      name: "lhayesf"},
+     {id: 17,
+      room_id: '',
+      name: "ecollinsg"},
+     {id: 18,
+      room_id: '',
+      name: "rhughesh"},
+     {id: 19,
+      room_id: '',
+      name: "lwrighti"},
+     {id: 20,
+      room_id: '',
+      name: "pwallacej"}]
+
 router.get('/', function(req, res, next) {
-  res.send(users);
+  res.json({users: users});
 });
 
 module.exports = router;
