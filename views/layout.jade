@@ -9,3 +9,10 @@ html
 
     block content
       .container
+
+    script.
+      var socket = io.connect('/php');
+      console.log(socket)
+      socket.on('connect', function() {
+         socket.emit("new_user", { user: "katlyn" })
+      });

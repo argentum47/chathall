@@ -59,3 +59,11 @@ app.use(function(err, req, res, next) {
 
 
 module.exports = app;
+
+
+/*
+  http://www.joezimjs.com/javascript/plugging-into-socket-io-advanced/
+  https://groups.google.com/forum/#!topic/socket_io/dqpWtO8ZoAU
+  https://groups.google.com/forum/#!topic/socket_io/dqpWtO8ZoAU
+
+*/

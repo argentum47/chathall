@@ -1,6 +1,5 @@
 var express = require('express'),
     router  = express.Router();
-var io = require('socket.io')();
 
 var rooms =
     [{id:13,
@@ -28,7 +27,7 @@ function getRoomName(id) {
 }
 
 router.get('/:id/:name', function(req, res,next) {
-  console.log(req.params, req.params.id, getRoomName(req.params.id))
+  //var room_name = getRoomName(req.params.id);
   res.render(getRoomName(req.params.id))
 });
 
