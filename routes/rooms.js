@@ -27,8 +27,7 @@ function getRoomName(id) {
 }
 
 router.get('/:id/:name', function(req, res,next) {
-  //var room_name = getRoomName(req.params.id);
-  res.render(getRoomName(req.params.id))
+  res.render('rooms', { roomId: req.params.id, title: getRoomName(req.params.id) });
 });
 
 router.get('/', function(req, res, next) {

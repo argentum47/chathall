@@ -1,16 +1,15 @@
 var io = require('socket.io')();
 
-// io.on('connection', function(socket) {
-//   console.log('user connected');
-//   socket.on('new_user', function(user) {
-//     console.log(user)
-//   });
-// });
-
-var chat = io.of('/php').on('connection', function(socket) {
+io.of('/rooms').on('connection', function(socket) {
   console.log("user joined php room");
-  chat.on('new_user', function(data) {
-    console.log(data);
+  socket.emit('pong', { number: 0})
+  socket.on('ping', function(data) {
+    console.log(data)
+    socket.nickname = data.nickname
+    socket.room = data.room_id
+
+    socket.join(data.room_id)
+
   });
 });
 

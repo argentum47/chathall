@@ -2,5 +2,18 @@ extends layout
 
 append content
   .row
-    .col-md-2
-      .chats
+    .col-md-4
+      form.loginForm
+        .form-group
+          label(for='nickname') Nickname
+          input(type='text', class='form-control', name='nickname')
+          input(type='submit', value='Enter')
+   .row
+     .col-md-8
+       .messages
+
+     .col-md-4
+       .users
+
+
+    script.

@@ -10,7 +10,7 @@ append content
     .col-md-2
       .rooms
 
-   script.
+  script.
      $('#room').onclick = function(e) {
        e.preventDefault();
        $.get("/rooms", "json").then(function(data) {
