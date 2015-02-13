@@ -13,7 +13,7 @@ html
       .container
 
     script.
-      var socket = io.connect('/rooms');
+      var socket = io.connect('/rooms', { port: 8000, transports: ['websocket']});
       socket.on('pong', function(data) {
       console.log(data);
       });
