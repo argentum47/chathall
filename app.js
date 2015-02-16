@@ -66,16 +66,95 @@ app.use(function(err, req, res, next) {
     });
 });
 
+var usernames = [];
 
-io.of('/rooms').on('connection', function(socket) {
-  socket.join('/')
-  console.log("user joined php room");
-  socket.emit('pong', { number: 0})
+function findClientsSocket(roomId, namespace) {
+  var res = []
+  , ns = io.of(namespace ||"/");
+
+  if (ns) {
+    for (var id in ns.connected) {
+      if(roomId) {
+        var index = ns.connected[id].rooms.indexOf(roomId) ;
+        if(index !== -1) {
+          res.push(ns.connected[id]);
+        }
+      } else {
+        res.push(ns.connected[id]);
+      }
+    }
+  }
+  return res;
+}
+
+var chat = io.of('/rooms').on('connection', function(socket) {
+
+  socket.emit('pong', "connected")
   socket.on('ping', function(data) {
     console.log(data)
-    socket.nickname = data.nickname
-    socket.room = data.room_id
-    //socket.join(data.room_id)
+  });
 
+  socket.on('load', function(data) {
+    var room = findClientsSocket(io, data.room, '/rooms')
+    console.log(data, usernames)
+    if(data.username) {
+      if(usernames.indexOf(data.username) === -1) {
+        socket.username = data.username
+        socket.room = data.room
+        socket.active = true;
+        socket.join(data.room)
+        usernames.push(socket.username)
+        socket.emit('log_message', { success: true })
+        }
+    }
+
+    chat.in(data.room).emit('peopleInChat', {
+      boolean: true,
+      roomId: data.room,
+      users: usernames
+    });
+  });
+
+  socket.on('login', function(data) {
+    var room = findClientsSocket(io, data.room, '/rooms')
+    if(usernames.indexOf(data.username) === -1) {
+      socket.emit('log_message', { success: false, message: 'user name exists'})
+    } else {
+      socket.username = data.username
+      //socket.updated_at = data.id
+      socket.room = data.room
+      socket.active = true
+
+      socket.join(data.room);
+
+      if(room.length >= 0) {
+        usernames.push(socket.username);
+        console.log(usernames);
+        socket.emit('log_message', { success: true })
+      }
+
+      chat.in(data.room).emit('peoplInChat', {
+        boolean: true,
+        roomId: data.room,
+        users: usernames
+      });
+    }
+  });
+
+  socket.on('disconnect', function() {
+    usernames.splice(usernames.indexOf(this.username), 1)
+    socket.broadcast.to(this.room).emit('leave', {
+      room: this.room,
+      user: this.username
+    });
+    socket.leave(socket.room)
+  });
+
+  socket.on('message', function(data){
+    console.log(data, socket.room)
+    socket.broadcast.to(socket.room).emit('receive', {
+      content: data.content,
+      user: data.user
+    });
   });
 });

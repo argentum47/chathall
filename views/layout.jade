@@ -5,9 +5,11 @@ html
     link(rel='stylesheet', href='/stylesheets/style.css')
     script(type="text/javascript", src="/javascripts/utility.js")
     script(type="text/javascript", src="/socket.io/socket.io.js")
+
   body
-    .navbar.navbar-default
-      .navbar-brand!=title
+    block title
+      .navbar.navbar-default
+        .navbar-brand!=title
 
     block content
       .container
@@ -15,6 +17,5 @@ html
     script.
       var socket = io.connect('/rooms', { port: 8000, transports: ['websocket']});
       socket.on('pong', function(data) {
-      console.log(data);
+        console.log(data);
       });
-      socket.emit("ping", { nickname: "katlyn", room_id: "1" });

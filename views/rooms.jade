@@ -1,19 +1,24 @@
 extends layout
 
-append content
+block content
   .row
-    .col-md-4
+    .col-md-12.logs
       form.loginForm
         .form-group
           label(for='nickname') Nickname
-          input(type='text', class='form-control', name='nickname')
-          input(type='submit', value='Enter')
-   .row
+          input(type='text', class='form-control', name='username', class='username')
+          input(type='submit', value='Enter', id='login')
+   .row.chatWindow
      .col-md-8
        .messages
+       .messageForm
+         form.form-inline
+           .form-group
+             label(for='content')
+             input(type='text', class='form-control', class='content')
+             input(type='submit', class='btn btn-primary', value="Send", id='sendMessage')
 
      .col-md-4
        .users
 
-
-    script.
+   script(type="text/javascript", src="/javascripts/chats.js")

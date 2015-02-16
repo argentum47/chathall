@@ -26,7 +26,7 @@ function getRoomName(id) {
   }
 }
 
-router.get('/:id/:name', function(req, res,next) {
+router.get('/:id', function(req, res,next) {
   res.render('rooms', { roomId: req.params.id, title: getRoomName(req.params.id) });
 });
 
